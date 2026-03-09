@@ -9,22 +9,7 @@
 [![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-Ready-2088FF?logo=github-actions&logoColor=white)](https://github.com/features/actions)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/)
 
-> 🤖 基于 AI 大模型的 A股/港股/美股自选股智能分析系统，每日自动分析并推送「决策仪表盘」到企业微信/飞书/Telegram/邮箱
-
-[**功能特性**](#-功能特性) · [**快速开始**](#-快速开始) · [**推送效果**](#-推送效果) · [**完整指南**](docs/full-guide.md) · [**常见问题**](docs/FAQ.md) · [**更新日志**](docs/CHANGELOG.md)
-
-简体中文 | [English](docs/README_EN.md) | [繁體中文](docs/README_CHT.md)
-
-</div>
-
-## 💖 赞助商 (Sponsors)
-<div align="center">
-  <a href="https://serpapi.com/baidu-search-api?utm_source=github_daily_stock_analysis" target="_blank">
-    <img src="./sources/serpapi_banner_zh.png" alt="轻松抓取搜索引擎上的实时金融新闻数据 - SerpApi" height="160">
-  </a>
-</div>
-<br>
-
+> 🤖 基于 AI 大模型的 A股/港股/美股自选股智能分析系统。
 
 ## ✨ 功能特性
 
@@ -154,27 +139,6 @@
 
 默认每个**工作日 18:00（北京时间）**自动执行，也可手动触发
 
-### 方式二：本地运行 / Docker 部署
-
-```bash
-# 克隆项目
-git clone https://github.com/ZhuLinsen/daily_stock_analysis.git && cd daily_stock_analysis
-
-# 安装依赖
-pip install -r requirements.txt
-
-# 配置环境变量
-cp .env.example .env && vim .env
-
-# browser_cli 模式可先执行一次 GPT 浏览器授权（推荐）
-python main.py --llm-browser-login
-
-# 运行分析
-python main.py
-```
-
-> Docker 部署、定时任务配置请参考 [完整指南](docs/full-guide.md)
-
 ## 📱 推送效果
 
 ### 决策仪表盘
@@ -227,69 +191,7 @@ python main.py
 
 > 📖 完整环境变量、定时任务配置请参考 [完整配置指南](docs/full-guide.md)
 
-
-## 🖥️ Web 界面
-
-![img.png](sources/fastapi_server.png)
-
-包含完整的配置管理、任务监控和手动分析功能。
-
-**可选密码保护**：在 `.env` 中设置 `ADMIN_AUTH_ENABLED=true` 可启用 Web 登录，首次访问在网页设置初始密码，保护 Settings 中的 API 密钥等敏感配置。详见 [完整指南](docs/full-guide.md)。
-
-### 从图片添加股票
-
-在 **设置 → 基础设置** 中找到「从图片添加」区块，拖拽或选择自选股截图（如 APP 持仓页、行情列表截图），系统会通过 Vision AI 自动识别股票代码并合并到自选列表。
-
-**配置与限制**：
-- 需配置 `GEMINI_API_KEY`、`ANTHROPIC_API_KEY`、`OPENAI_API_KEY` 中至少一个，或启用 `LLM_AUTH_MODE=browser_cli`
-- 支持 JPG、PNG、WebP、GIF，单张最大 5MB；请求超时 60 秒
-
-**API 调用**：`POST /api/v1/stocks/extract-from-image`，表单字段 `file`，返回 `{ "codes": ["600519", "300750", ...] }`。详见 [完整指南](docs/full-guide.md)。
-
-### 启动方式
-
-1. **编译前端** (首次运行需要)
-   ```bash
-   cd ./apps/dsa-web
-   npm install && npm run build
-   cd ../..
-   ```
-
-2. **启动服务**
-   ```bash
-   python main.py --webui       # 启动 Web 界面 + 执行定时分析
-   python main.py --webui-only  # 仅启动 Web 界面
-   ```
-
-访问 `http://127.0.0.1:8000` 即可使用。
-
-> 也可以使用 `python main.py --serve` (等效命令)
-
-## 🗺️ Roadmap
-
-查看已支持的功能和未来规划：[更新日志](docs/CHANGELOG.md)
-
-> 有建议？欢迎 [提交 Issue](https://github.com/ZhuLinsen/daily_stock_analysis/issues)
-
-
 ---
-
-## ☕ 支持项目
-
-如果本项目对你有帮助，欢迎支持项目的持续维护与迭代，感谢支持 🙏  
-赞赏可备注联系方式，祝股市长虹
-
-| 支付宝 (Alipay) | 微信支付 (WeChat) | Ko-fi |
-| :---: | :---: | :---: |
-| <img src="./sources/alipay.jpg" width="200" alt="Alipay"> | <img src="./sources/wechatpay.jpg" width="200" alt="WeChat Pay"> | <a href="https://ko-fi.com/mumu157" target="_blank"><img src="./sources/ko-fi.png" width="200" alt="Ko-fi"></a> |
-
----
-
-## 🤝 贡献
-
-欢迎提交 Issue 和 Pull Request！
-
-详见 [贡献指南](docs/CONTRIBUTING.md)
 
 ### 本地门禁（建议先跑）
 
@@ -308,29 +210,5 @@ npm run lint
 npm run build
 ```
 
-## 📄 License
-[MIT License](LICENSE) © 2026 ZhuLinsen
-
-如果你在项目中使用或基于本项目进行二次开发，
-非常欢迎在 README 或文档中注明来源并附上本仓库链接。
-这将有助于项目的持续维护和社区发展。
-
-## 📬 联系与合作
-- GitHub Issues：[提交 Issue](https://github.com/ZhuLinsen/daily_stock_analysis/issues)
-
-## ⭐ Star History
-**如果觉得有用，请给个 ⭐ Star 支持一下！**
-
-<a href="https://star-history.com/#ZhuLinsen/daily_stock_analysis&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=ZhuLinsen/daily_stock_analysis&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=ZhuLinsen/daily_stock_analysis&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=ZhuLinsen/daily_stock_analysis&type=Date" />
- </picture>
-</a>
-
-## ⚠️ 免责声明
-
-本项目仅供学习和研究使用，不构成任何投资建议。股市有风险，投资需谨慎。作者不对使用本项目产生的任何损失负责。
 
 ---
